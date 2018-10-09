@@ -1,0 +1,24 @@
+dual token model
+1 utility token
+1 dividend bearing token <-- increases in price the more utility tokens there are, so more solartainers = more profit
+
+//One Solartainer can bring electricity to about 4000 people in one village.
+//1 Solartainer = 1 village ={400 households, 40 businesses, 10 communal facilities}
+//Our partner has currently an MoU with one African country for bringing the Solartainer to 500 villages.
+
+//1 solartainer = 80MWh p.a.
+//1 SolartainerToken = 1/20th of 1kWh
+
+// Structure: Dividend bearing token offered in token sale
+// Inherent Value: Dividend sources, business model; consumer token-incentivized customer and operators base
+// Supply: per MoU amount of Solartainer to be deployed
+// Distribution: Through token sale and on secondary exchanges (“transferable securities”)
+//The Hedonic Pricing will support us in modeling the investment token offering
+//continuous token model dependent on new solartainers MoUs
+//one curved bonding token, price increases with supply because more DBTs = more solartainers = more SolartainerTokens = more dividend potential
+
+//The Network Capital theory is especially helpful in developing an understanding for the supply and exchange models of the community token.
+//objective = local currency backed by power generated, redeamable for MWh
+//one contract per Solartainer
+//supply is function of MWh produced * lifetime of container / x,  where x is tokens per MWh
+//all token purchases in all SolartainerTokens pay a div to DivBearToken

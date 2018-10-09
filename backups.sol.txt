@@ -1,0 +1,48 @@
+
+
+
+
+// pragma solidity ^0.4.25;
+// /*
+// WIP for now its clone of SolUtilToken.
+// Adapt formulas from
+//     https://osolmaz.com/2018/08/03/token-bonding-1/
+//     https://osolmaz.com/2018/08/16/exact-dividends/
+// TODO: add bonding curve. token price increases with each 10 solartainers added or 80000 SolUtilTokens
+// TODO: token is burnable, ownable, mintable
+// */
+// import "./SafeMath.sol";
+
+// contract SolInvestToken {
+//     using SafeMath for uint;
+//     address public owner;
+//     uint public totalSupply;
+
+//     modifier isOwner() {require(msg.sender == owner); _;}
+//     mapping(address => uint) public balances;
+
+//     constructor() public {
+//         //out of thin air for now
+//         totalSupply = totalSupply.add(100);
+//     }
+
+
+//     function mint(address _to, uint256 _amount)
+//         isOwner
+//         public
+//         returns(bool)
+//     {
+//         require(_to != address(0x00));
+
+//         totalSupply = totalSupply.add(_amount);
+//         balances[_to] = balances[_to].add(_amount);
+
+//         // bytes memory data;
+//         // emit Mint(_to, _amount);
+//         // emit Transfer(address(0x00), _to, _amount, data);
+//         return true;
+//     }
+
+
+
+// }
