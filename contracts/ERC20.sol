@@ -1,13 +1,13 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.4.25;
 
 import "./SafeMath.sol";
 /**
- * @title ERC20 mock token
+ * Stub ERC20
  */
 contract ERC20 {
-
     using SafeMath for uint256;
     mapping(address => uint256) public balances;
+    mapping(address => mapping(address => uint256)) public allowed;
     uint256 public totalSupply_;
 
     constructor() public {
@@ -23,20 +23,19 @@ contract ERC20 {
     }
 
     function transfer(address _to, uint256 _value) public returns (bool) {
-        balances[msg.sender] = balances[msg.sender].sub(_value);
         balances[_to] = balances[_to].add(_value);
         return true;
     }
 
-  event Transfer(
-    address indexed from,
-    address indexed to,
-    uint256 value
-  );
+    function approve(address _spender, uint256 _value) public returns (bool) {
+        allowed[msg.sender][_spender] = _value;
+        return true;
+    }
 
-  event Approval(
-    address indexed owner,
-    address indexed spender,
-    uint256 value
-  );
+    function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {
+        balances[_from] = balances[_from].sub(_value);
+        balances[_to] = balances[_to].add(_value);
+        allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_value);
+        return true;
+    }
 }

@@ -1,36 +1,20 @@
 pragma solidity ^0.4.25;
 
 import "./SafeMath.sol";
-import "./ERC223.sol";
+import "./ERC20.sol";
+
 
 //token is burnable, ownable, mintable
-contract SolUtilToken is ERC223 {
+contract SolUtilToken is ERC20 {
     using SafeMath for uint256;
 
     string constant public TOKEN_NAME = "SolUtilToken";
     string constant public TOKEN_SYMBOL = "SUT";
     uint8 constant public TOKEN_DECIMALS = 18; // 1 SUT = 1000000000000000000 mSuts //accounting done in mSuts
-    // address constant public TOKEN_OWNER = //Token Owner
-
-    function() public {
-
-    }
 
     constructor() public {
         owner = msg.sender;
     }
-
-    // function name() pure external returns(string) {
-    //     return TOKEN_NAME;
-    // }
-
-    // function symbol() pure external returns(string) {
-    //     return TOKEN_SYMBOL;
-    // }
-
-    // function decimals() pure external returns(uint8) {
-    //     return uint8(TOKEN_DECIMALS);
-    // }
 
     function balanceOf(address _who) public view returns(uint256) {
         return balances[_who];
@@ -60,7 +44,7 @@ contract SolUtilToken is ERC223 {
         balances[msg.sender] = balances[msg.sender].sub(_value);
         balances[_to] = balances[_to].add(_value);
 
-        if(codeLength > 0x00) {
+        if (codeLength > 0x00) {
             ERC223ReceivingContractInterface receiver = ERC223ReceivingContractInterface(_to);
             receiver.tokenFallback(msg.sender, _value, _data);
         }
@@ -146,9 +130,9 @@ contract SolUtilToken is ERC223 {
     }
 
     function finishMinting()
+        public
         onlyOwner
         canMint
-        public
         returns (bool)
     {
         mintingFinished = true;
@@ -166,15 +150,4 @@ contract SolUtilToken is ERC223 {
 
         emit Burn(msg.sender, _value);
     }
-
-    //change owner addr to crowdsale contract to enable minting
-    //if successful the crowdsale contract will reset owner to TOKEN_OWNER
-    function transferOwnership(address _newOwner) public onlyOwner {
-        require(_newOwner != address(0x00));
-
-        owner = _newOwner;
-
-        emit OwnershipTransferred(msg.sender, owner);
-    }
-
 }

@@ -1,3 +1,16 @@
+https://github.com/relevant-community/bonding-curve/blob/master/test/BondingCurve.test.js
+https://github.com/relevant-community/bonding-curve/blob/master/contracts/BondingCurve.sol
+https://github.com/relevant-community/bonding-curve/blob/master/contracts/mocks/BondingCurveMock.sol
+https://blog.relevant.community/how-to-make-bonding-curves-for-continuous-token-models-3784653f8b17
+https://medium.com/@simondlr/tokens-2-0-curved-token-bonding-in-curation-markets-1764a2e0bee5
+
+
+
+
+
+
+
+
 dual token model
 1 utility token
 1 dividend bearing token <-- increases in price the more utility tokens there are, so more solartainers = more profit
