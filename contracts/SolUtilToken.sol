@@ -1,20 +1,36 @@
 pragma solidity ^0.4.25;
 
 import "./SafeMath.sol";
-import "./ERC20.sol";
-
+import "./ERC223.sol";
 
 //token is burnable, ownable, mintable
-contract SolUtilToken is ERC20 {
+contract SolUtilToken is ERC223 {
     using SafeMath for uint256;
 
     string constant public TOKEN_NAME = "SolUtilToken";
     string constant public TOKEN_SYMBOL = "SUT";
     uint8 constant public TOKEN_DECIMALS = 18; // 1 SUT = 1000000000000000000 mSuts //accounting done in mSuts
+    // address constant public TOKEN_OWNER = //Token Owner
+
+    function() public {
+
+    }
 
     constructor() public {
         owner = msg.sender;
     }
+
+    // function name() pure external returns(string) {
+    //     return TOKEN_NAME;
+    // }
+
+    // function symbol() pure external returns(string) {
+    //     return TOKEN_SYMBOL;
+    // }
+
+    // function decimals() pure external returns(uint8) {
+    //     return uint8(TOKEN_DECIMALS);
+    // }
 
     function balanceOf(address _who) public view returns(uint256) {
         return balances[_who];
@@ -36,7 +52,9 @@ contract SolUtilToken is ERC20 {
         require(balances[msg.sender] >= _value);
 
         uint codeLength;
-        // all contracts have size > 0, however it's possible to bypass this check with a specially crafted contract.
+        // all contracts have size > 0, however it's possible to bypass this check with
+        // a specially crafted contract. in our case we want to check the msg.sender is
+        // either a POA or a contract compliant with the ERC223ReceivingContractInterface
         assembly {
             codeLength := extcodesize(_to)
         }
@@ -44,7 +62,7 @@ contract SolUtilToken is ERC20 {
         balances[msg.sender] = balances[msg.sender].sub(_value);
         balances[_to] = balances[_to].add(_value);
 
-        if (codeLength > 0x00) {
+        if(codeLength > 0x00) {
             ERC223ReceivingContractInterface receiver = ERC223ReceivingContractInterface(_to);
             receiver.tokenFallback(msg.sender, _value, _data);
         }
@@ -96,7 +114,10 @@ contract SolUtilToken is ERC20 {
         return true;
     }
 
-    function decreaseApproval(address _spender, uint _subtractedValue) public returns (bool) {
+    function decreaseApproval(address _spender, uint _subtractedValue)
+        public
+        returns (bool)
+    {
         require(_spender != address(0x00));
 
         uint oldValue = allowed[msg.sender][_spender];
@@ -113,9 +134,9 @@ contract SolUtilToken is ERC20 {
     }
 
     function mint(address _to, uint256 _amount)
+        public
         onlyOwner
         canMint
-        public
         returns(bool)
     {
         require(_to != address(0x00));
@@ -150,4 +171,15 @@ contract SolUtilToken is ERC20 {
 
         emit Burn(msg.sender, _value);
     }
+
+    //change owner addr to crowdsale contract to enable minting
+    //if successful the crowdsale contract will reset owner to TOKEN_OWNER
+    function transferOwnership(address _newOwner) public onlyOwner {
+        require(_newOwner != address(0x00));
+
+        owner = _newOwner;
+
+        emit OwnershipTransferred(msg.sender, owner);
+    }
+
 }
